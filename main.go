@@ -18,6 +18,7 @@ func main() {
 
 	r := gin.Default()
 	r.Static("/cards", "./templates/cards")
+	r.Static("/scripts", "./templates/scripts")
 	r.LoadHTMLGlob("templates/views/*")
 
 	r.GET("/ping", func(c *gin.Context) {
@@ -58,7 +59,7 @@ func serveWs(w http.ResponseWriter, r *http.Request, roomId string) {
 		return
 	}
 	c := &room.Connection{Id: room.NewRequestId().String(), Send: make(chan []byte, 256), Ws: ws}
-	s := room.Subscription{Conn:c,Room: roomId}
+	s := room.Subscription{Conn: c, Room: roomId}
 	room.H.Register <- s
 	go s.WritePump()
 	go s.ReadPump()
