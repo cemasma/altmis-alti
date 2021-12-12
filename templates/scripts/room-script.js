@@ -54,6 +54,7 @@ window.onload = function () {
             ground.src = `/cards/${data.cardOnGround.Kind}-${data.cardOnGround.CardName}.svg`;
             ground.setAttribute('onclick', 'switchCard(this);');
             document.getElementById('cardsOnGround').appendChild(ground);
+            document.getElementById('ace').innerText = data.cardOnGround.Kind;
 
             const back = document.createElement('img');
             back.id = "groundBackImg";
@@ -144,7 +145,7 @@ window.onload = function () {
 
         if (data.command === 'endTurn') {
             document.getElementById('totalScore').innerText = data.totalScore;
-            document.getElementById('enemyTotalScore').innerText = data.enemyTotalScore;
+            document.getElementById('opponentTotalScore').innerText = data.enemyTotalScore;
         }
     };
 
