@@ -92,23 +92,23 @@ func (h *Hub) Run() {
 
 			if len(h.Rooms[s.Room]) < connectionLimitPerRoom {
 				h.Rooms[s.Room][s.Conn] = true
-			}
 
-			if len(h.Rooms[s.Room]) == connectionLimitPerRoom {
-				var player1Id string
-				var player2Id string
+				if len(h.Rooms[s.Room]) == connectionLimitPerRoom {
+					var player1Id string
+					var player2Id string
 
-				for key := range h.Rooms[s.Room] {
-					if player1Id == "" {
-						player1Id = key.Id
-					} else {
-						player2Id = key.Id
+					for key := range h.Rooms[s.Room] {
+						if player1Id == "" {
+							player1Id = key.Id
+						} else {
+							player2Id = key.Id
+						}
 					}
-				}
 
-				g := game.NewGame(s.Room, player1Id, player2Id)
-				h.Games[s.Room] = &g
-				h.sendNewTurnMessage(s.Room)
+					g := game.NewGame(s.Room, player1Id, player2Id)
+					h.Games[s.Room] = &g
+					h.sendNewTurnMessage(s.Room)
+				}
 			}
 		case s := <-h.Unregister:
 			connections := h.Rooms[s.Room]
