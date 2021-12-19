@@ -143,13 +143,8 @@ func (h *Hub) Run() {
 			}
 
 			if movement.Command == "play" {
-				var groundKind string
 
-				if len(g.Ground) > 0 {
-					groundKind = g.Ground[len(g.Ground)-1].Kind
-				} else {
-					groundKind = ""
-				}
+				groundKind := g.GetGroundKind()
 
 				playable := player.Move(movement.Kind, movement.CardName, groundKind, g.IsGameOff, len(g.Ground) == 0, len(g.Cards) == 0)
 
@@ -158,7 +153,7 @@ func (h *Hub) Run() {
 					player.MoveCard(index, g)
 
 					time.AfterFunc(time.Second, func() {
-						if len(g.Ground) == 2 {
+						if g.IsSecondCardPlayed() {
 							g.CalculateTurnPoints(player, otherPlayer)
 							player = g.PlayerMap[player.Id]
 							otherPlayer = g.PlayerMap[otherPlayer.Id]
@@ -174,7 +169,7 @@ func (h *Hub) Run() {
 							moveResultP1.Command = "play2"
 							moveResultP2.Command = "play2"
 
-							if len(player.Cards) == 6 {
+							if player.IsPlayerHandFull() {
 								fmt.Printf("%v\n%v\n\n", player.Cards, otherPlayer.Cards)
 								moveResultP1.NewCardKind = g.PlayerMap[player.Id].Cards[len(player.Cards)-1].Kind
 								moveResultP1.NewCardName = g.PlayerMap[player.Id].Cards[len(player.Cards)-1].CardName
@@ -198,7 +193,7 @@ func (h *Hub) Run() {
 							h.sendDataToConnection(m.room, player.Id, message1)
 							h.sendDataToConnection(m.room, otherPlayer.Id, message2)
 
-							if len(g.Cards) == 0 {
+							if g.IsGroundCardsOver() {
 								var removeGroundMoveResult moveResult
 								removeGroundMoveResult.Command = "removeGround"
 

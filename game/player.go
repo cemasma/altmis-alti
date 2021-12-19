@@ -64,3 +64,7 @@ func (player *Player) MoveCard(index int, g *Game) {
 	player.Cards = append(player.Cards[:index], player.Cards[index+1:]...)
 	g.PlayerMap[player.Id] = *player
 }
+
+func (player Player) IsPlayerHandFull() bool {
+	return len(player.Cards) == 6
+}

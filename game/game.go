@@ -216,3 +216,19 @@ func (g *Game) GameOff(playerId string) {
 	g.IsGameOff = true
 	g.offPlayerId = playerId
 }
+
+func (g Game) GetGroundKind() (groundKind string) {
+	if len(g.Ground) > 0 {
+		groundKind = g.Ground[len(g.Ground)-1].Kind
+	}
+
+	return
+}
+
+func (g Game) IsGroundCardsOver() bool {
+	return len(g.Cards) == 0
+}
+
+func (g Game) IsSecondCardPlayed() bool {
+	return len(g.Cards) == 2
+}
