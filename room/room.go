@@ -152,7 +152,7 @@ func (h *Hub) Run() {
 					_, index, _ := player.IsPlayerHaveCard(movement.Kind, movement.CardName)
 					player.MoveCard(index, g)
 
-					time.AfterFunc(time.Second, func() {
+					time.AfterFunc(time.Second*2, func() {
 						if g.IsSecondCardPlayed() {
 							g.CalculateTurnPoints(player, otherPlayer)
 							player = g.PlayerMap[player.Id]
@@ -214,7 +214,7 @@ func (h *Hub) Run() {
 								time.AfterFunc(time.Second*2, func() {
 									h.sendEndTurnMessage(m.room, player.Id, otherPlayer.Id)
 
-									time.AfterFunc(time.Second*3, func() {
+									time.AfterFunc(time.Second*4, func() {
 										h.sendNewTurnMessage(m.room)
 									})
 								})
