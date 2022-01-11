@@ -211,10 +211,10 @@ func (h *Hub) Run() {
 								g.CalculatePoints(player.Id, otherPlayer.Id)
 								g.NewTurn()
 
-								time.AfterFunc(time.Second*5, func() {
+								time.AfterFunc(time.Second*2, func() {
 									h.sendEndTurnMessage(m.room, player.Id, otherPlayer.Id)
 
-									time.AfterFunc(time.Second*5, func() {
+									time.AfterFunc(time.Second*4, func() {
 										h.sendNewTurnMessage(m.room)
 									})
 								})
