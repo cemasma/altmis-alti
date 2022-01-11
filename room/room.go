@@ -214,7 +214,7 @@ func (h *Hub) Run() {
 								time.AfterFunc(time.Second*2, func() {
 									h.sendEndTurnMessage(m.room, player.Id, otherPlayer.Id)
 
-									time.AfterFunc(time.Second*4, func() {
+									time.AfterFunc(time.Second*2, func() {
 										h.sendNewTurnMessage(m.room)
 									})
 								})

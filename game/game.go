@@ -230,5 +230,5 @@ func (g Game) IsGroundCardsOver() bool {
 }
 
 func (g Game) IsSecondCardPlayed() bool {
-	return len(g.Cards) == 2
+	return len(g.Ground) == 2
 }
